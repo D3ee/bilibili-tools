@@ -113,12 +113,12 @@ class judge(login):
         top50_attention_list = await self.get_attention()
         video_list = []
         for mid in top50_attention_list:
-            url = "https://space.bilibili.com/ajax/member/getSubmitVideos?mid=" + \
-                  str(mid) + "&pagesize=100&tid=0"
+            url = "https://api.bilibili.com/x/space/arc/search?mid=" + str(mid) + "&pn=1&ps=100&jsonp=jsonp"
             response = requests.get(url)
-            datalen = len(response.json()['data']['vlist'])
+            datalen = len(response.json()['data']['list']['vlist'])
+            time.sleep(0.2)
             for i in range(0, datalen):
-                aid = response.json()['data']['vlist'][i]['aid']
+                aid = response.json()['data']['list']['vlist'][i]['aid']
                 video_list.append(aid)
         return video_list
 
